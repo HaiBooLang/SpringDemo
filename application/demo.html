@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Demo</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{message}}</p>
+        <p>姓名：{{username}}</p>
+        <p>性别：{{gender}}</p>
+        <p>描述：{{description}}</p>
+        <p v-html="description"></p>
+        <a v-bind:href="link">知乎</a>
+        <p>
+            <input :type="inputType" :placeholder="inputValue">
+        </p>
+        <p>
+            <img :src="imageSource" :style="{width:imageWidth}" alt="">
+        </p>
+        <p>{{number + 1}}</p>
+        <p>{{statusOk ? 'True' : 'False'}}</p>
+        <p>{{message.split('').reverse().join('')}}</p>
+        <p :id="'list-' + xxxId">xxx</p>
+        <p>{{userInfo.username}}</p>
+        <h2>count 的值为 {{countValue}}</h2>
+        <p>
+            <button v-on:click="addCount">+1</button>
+            <button @click="countValue -= 1">-1</button>
+        </p>
+        <p>
+            <button @click="flag = !flag">切换 Flag</button>
+        </p>
+        <p v-if="flag">被 v-if 控制</p>
+        <p v-show="flag">被 v-show 控制</p>
+
+        <p v-if="grade === 'A'">优秀</p>
+        <p v-else-if="grade === 'B'">良好</p>
+        <p v-else-if="grade === 'C'">一般</p>
+        <p v-else>差</p>
+
+        <p>
+            <input type="text" v-model="userName">
+            <button @click="addUser">添加用户</button>
+        </p>
+        <ul>
+            <li v-for="(user, index) in userList" :key="user.id">
+                <input type="checkbox">
+                索引是 {{index}}, 姓名是 {{user.name}}, ID 是 {{user.id}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const visualModel = {
+            data: function () {
+                return {
+                    message: 'Hello World',
+                    username: 'haiboolang',
+                    gender: 'male',
+                    description: '<a href="https://bilibili.com">哔哩哔哩</a>',
+
+                    link: 'https://zhihu.com',
+
+                    inputType: 'text',
+                    inputValue: '请输入内容',
+
+                    imageSource: 'https://i2.hdslb.com/bfs/archive/721ecf6ed5ef7cf406e801216513f7f318353704.png@3840w_360h_1c.webp',
+                    imageWidth: '500px',
+
+                    number: 0,
+                    statusOk: false,
+                    statusMessage: 'TestDemo',
+                    xxxId: 6,
+                    userInfo: {
+                        username: 'username',
+                    },
+
+                    countValue: 0,
+
+                    flag: false,
+                    grade: 'D',
+
+                    userList: [
+                        { id: 1, name: '张三' },
+                        { id: 2, name: '李四' },
+                        { id: 3, name: '王五' },
+                    ],
+                    userName: '',
+                    nextId: 4,
+                }
+            },
+            methods: {
+                addCount() {
+                    this.countValue += 1;
+                },
+                addUser() {
+                    this.userList.unshift({ id: this.nextId, name: this.userName });
+                    this.userName = '';
+                    this.nextId++;
+                }
+            },
+        }
+
+        const app = Vue.createApp(visualModel)
+        app.mount('#app')
+    </script>
+</body>
